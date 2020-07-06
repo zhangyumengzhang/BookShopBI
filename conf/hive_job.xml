@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <!-- 表示可执行的type -->
+    <job type="analysis">
+        <!--将查询导出一个文件
+        <hql>"select * from test.book_category" > abc.txt</hql>-->
+
+        <!--导出到HDFS-->
+        <hql>"insert overwrite directory '/data/warehouse/book_category' select * from test.book_category"</hql>
+
+        <!--导出到HDFS-->
+        <hql>"insert overwrite directory '/data/warehouse/bx_book_ratings' select * from test.bx_book_ratings"</hql>
+
+        <!--导出到HDFS-->
+        <hql>"insert overwrite directory '/data/warehouse/orders' select * from test.orders"</hql>
+
+        <!--导出到HDFS-->
+        <hql>"insert overwrite directory '/data/warehouse/order_detail' select * from test.order_detail"</hql>
+
+        <!--导出到另外的hive表
+        <hql>"insert into table test.temp select orderid,userid,orderdate from test.orders where status=0"</hql>
+-->
+    </job>
+
+    <!-- 使用HQL进行数据清洗 -->
+    <job type="etl_db">
+        <hql>数据清洗的HQL</hql>
+        <hql>……</hql>
+        <hql>……</hql>
+    </job>
+
+    <job type="etl_data_dedup">
+        <hql>
+            "insert overwrite table orders PARTITION(dt)
+            select * from (
+            select * from (
+            select * from orders where dt=$dt
+            union all
+            select * from orders where dt &lt;$dt) t1 DISTRIBUTE BY orderid SORT BY orderid,update_time) t2
+            WHERE rownum(orderid)=1"
+        </hql>
+        <!--使用HQL进行数据去重，公式：结果=（全量数据减去（全量数据与增量数据的交集））再与增量数据取并集 -->
+        <hql>
+            "insert overwrite table test.dedup_orders select * from (select t1.* from (select * from test.orders
+            where dt &lt;$dt) t1 left outer join (select * from test.orders where dt=$dt) t2 on t1.orderid=t2.orderid
+            where t2.orderid is null UNION ALL select * from test.orders where dt=$dt) t3"
+        </hql>
+    </job>
+</root>

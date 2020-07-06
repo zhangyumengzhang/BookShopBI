@@ -1,0 +1,9 @@
+insert overwrite table test.dedup_orders
+select * from (
+    select t1.* from (select * from test.bx_orders where t1.dt < '2017-07-11') t1
+                        left outer join
+                        (select * from test.bx_orders where t2.dt='2017-07-11') t2
+                        on t1.orderid=t2.orderid where t2.orderid is null
+    UNION ALL
+    select * from test.bx_orders where dt='2017-07-11'
+) t3

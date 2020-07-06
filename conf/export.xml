@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <!-- 为每一个“从Hive导出到数据库中表”的命令定义sqoop shell参数 -->
+    <!-- Hive to mysql 全部导出-->
+    <sqoop-shell type="export">
+        <param key="connect">jdbc:mysql://ecs-hadoop-master:3306/books</param>
+        <param key="username">root</param>
+        <param key="password">123456</param>
+        <!--mysql上的表-->
+        <param key="table">orders</param>
+        <!--hive上的schema-->
+        <param key="hcatalog-database">test</param>
+        <!--hive上的表-->
+        <param key="hcatalog-table">orders</param>
+        <param key="m">1</param>
+    </sqoop-shell>
+
+
+
+    <!-- Hive to mysql 部分导出-->
+    <!--mysql上的表-->
+
+    <!--要导入的列-->
+
+    <!--hive上的schema-->
+    <!--hive上的表-->
+    <!--
+
+    <sqoop-shell type="export">
+        <param key="connect">jdbc:mysql://ecs-hadoop-master:3306/books</param>
+        <param key="username">root</param>
+        <param key="password">123456</param>
+
+        <param key="table">temp</param>
+
+        <param key="columns">"cate_id,name"</param>
+
+        <param key="hcatalog-database">test</param>
+
+        <param key="hcatalog-table">book_category</param>
+        <param key="m">1</param>
+    </sqoop-shell>
+-->
+    <!-- HDFS to mysql
+    <sqoop-shell type="export">
+        <param key="connect">jdbc:mysql://master1:3306/BX</param>
+        <param key="username">hive</param>
+        <param key="password">hive</param>
+        <param key="table">category</param>
+        <param key="export-dir">/tmp/BX/category</param>
+        <param key="m">1</param>
+    </sqoop-shell>
+    -->
+</root>

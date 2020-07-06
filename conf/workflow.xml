@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <!--利用导入模块进行数据导入-->
+    <task type="import">com.sqoop.Main</task>
+
+    <!--执行点击流数据清洗
+    <task>com.etl.etl_clickstream</task>-->
+
+    <!--利用数据分析工具模块进行业务数据清洗
+    <task type="etl_db"></task>
+-->
+    <!--利用数据分析工具模块进行业务其他分析-->
+    <task type="analysis">com.hive.Main</task>
+
+    <!--利用导出模块进行数据导出-->
+    <task type="export">com.sqoop.Export</task>
+</root>

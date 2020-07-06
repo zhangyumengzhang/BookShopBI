@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <!-- 漏斗的所有URL正则表达式，具体值根据实际情况而定 -->
+    <urls>
+        <!--漏斗的第1个URL的正则表达式-->
+        <url>url1</url>
+        <!--漏斗的第2个URL的正则表达式-->
+        <url>url2</url>
+        <!--漏斗的第3个URL的正则表达式-->
+        <url>url3</url>
+    </urls>
+</root>

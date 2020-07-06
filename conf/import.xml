@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <!-- import_type="all|add"，all为全量导入； add为增量导入-->
+    <sqoop-shell type="import" table="book_category" import_type="all" >
+        <param key="Dorg.apache.sqoop.splitter.allow_text_splitter">true</param>
+        <param key="connect">jdbc:mysql://ecs-hadoop-master:3306/books</param>
+        <param key="username">root</param>
+        <param key="password">123456</param>
+        <param key="query">"select * from book_category where date_format(created,'%Y-%m-%d hh24:mi:ss') \$dt and \$CONDITIONS"</param>
+        <param key="target-dir">/data/warehouse/book_category</param>
+        <param key="hive-import"></param>
+        <param key="hive-database">test</param>
+        <param key="hive-table">book_category</param>
+        <param key="hive-partition-key">dt</param>
+        <param key="hive-partition-value">$dt</param>
+        <!--  create-sqoop-table  建表，如果表已经存在，该操作会报错！
+         <param key="create-hive-table"></param>
+        <param key="hive-overwrite"></param>-->
+        <param key="hive-delims-replacement">'\\t'</param>
+        <!--使用3个map任务并行导入数据-->
+        <param key="m">3</param>
+        <param key="null-string">'\\N'</param>
+        <param key="null-non-string">'\\N'</param>
+        <param key="split-by">cate_id</param>
+    </sqoop-shell>
+
+    <sqoop-shell type="import" table="orders" import_type="all">
+        <param key="Dorg.apache.sqoop.splitter.allow_text_splitter">true</param>
+        <param key="connect">jdbc:mysql://ecs-hadoop-master:3306/books</param>
+        <param key="username">root</param>
+        <param key="password">123456</param>
+        <param key="query">"select * from orders where date_format(update_time,'%Y-%m-%d hh24:mi:ss') \$dt and \$CONDITIONS"</param>
+        <param key="target-dir">/data/warehouse/orders</param>
+        <param key="hive-import"></param>
+        <param key="hive-database">test</param>
+        <param key="hive-table">orders</param>
+        <param key="hive-partition-key">dt</param>
+        <param key="hive-partition-value">$dt</param>
+        <!-- create-sqoop-table  建表，如果表已经存在，该操作会报错！
+        <param key="create-hive-table"></param>
+        <param key="hive-overwrite"></param>-->
+        <param key="hive-delims-replacement">'\\t'</param>
+        <param key="m">3</param>
+        <param key="null-string">'\\N'</param>
+        <param key="null-non-string">'\\N'</param>
+        <param key="split-by">order_id</param>
+    </sqoop-shell>
+
+    <sqoop-shell type="import" table="order_detail" import_type="all">
+        <param key="Dorg.apache.sqoop.splitter.allow_text_splitter">true</param>
+        <param key="connect">jdbc:mysql://ecs-hadoop-master:3306/books</param>
+        <param key="username">root</param>
+        <param key="password">123456</param>
+        <param key="query">"select * from order_detail where date_format(delivery_time,'%Y-%m-%d hh24:mi:ss') \$dt and \$CONDITIONS"</param>
+        <param key="target-dir">/data/warehouse/order_detail</param>
+        <param key="hive-import"></param>
+        <param key="hive-database">test</param>
+        <param key="hive-table">order_detail</param>
+        <param key="hive-partition-key">dt</param>
+        <param key="hive-partition-value">$dt</param>
+        <!-- create-sqoop-table  建表，如果表已经存在，该操作会报错！
+        <param key="create-hive-table"></param>
+        <param key="hive-overwrite"></param>-->
+        <param key="hive-delims-replacement">'\\t'</param>
+        <param key="m">3</param>
+        <param key="null-string">'\\N'</param>
+        <param key="null-non-string">'\\N'</param>
+        <param key="split-by">order_id</param>
+    </sqoop-shell>
+
+    <sqoop-shell type="import" table="bx_book_ratings" import_type="all">
+        <param key="Dorg.apache.sqoop.splitter.allow_text_splitter">true</param>
+        <param key="connect">jdbc:mysql://ecs-hadoop-master:3306/books</param>
+        <param key="username">root</param>
+        <param key="password">123456</param>
+        <param key="query">"select * from bx_book_ratings where date_format('1900-01-01','%Y-%m-%d hh24:mi:ss') \$dt and \$CONDITIONS"</param>
+        <param key="target-dir">/data/warehouse/bx_book_ratings</param>
+        <param key="hive-import"></param>
+        <param key="hive-database">test</param>
+        <param key="hive-table">bx_book_ratings</param>
+        <param key="hive-partition-key">dt</param>
+        <param key="hive-partition-value">$dt</param>
+        <!-- create-sqoop-table  建表，如果表已经存在，该操作会报错！
+        <param key="create-hive-table"></param>
+        <param key="hive-overwrite"></param>-->
+        <param key="hive-delims-replacement">'\\t'</param>
+        <param key="m">3</param>
+        <param key="null-string">'\\N'</param>
+        <param key="null-non-string">'\\N'</param>
+        <param key="split-by">userid</param>
+    </sqoop-shell>
+</root>
